@@ -26,7 +26,7 @@ export class ToolManager {
 		return this;
 	}
 
-	public async install(binaryName = this.githubRepo.repo): Promise<string | undefined> {
+	public async install(installDir = import.meta.dirname, binaryName = this.githubRepo.repo): Promise<string | undefined> {
 		const logger = this.logger.child({ scope: "toolmanager.install" });
 
 		const assetDescriptor = await this.findCompatibleAsset();
@@ -47,7 +47,7 @@ export class ToolManager {
 
 			// download and decompress the file
 			await downloadWithProgress(assetDescriptor.asset.browser_download_url, compressedArchive, assetSize);
-			return await decompressCommonFormats(compressedArchive, import.meta.dirname, {
+			return await decompressCommonFormats(compressedArchive, installDir, {
 				filter: (file) => basename(file.path) == binaryName,
 				strip: 5 // fixme: figure this value out
 			})
@@ -56,7 +56,7 @@ export class ToolManager {
 						? Promise.reject(`Could not find binary '${binaryName} in downloaded artifact'`)
 						: Promise.resolve(files)
 				)
-				.then(() => join(import.meta.dirname, binaryName))
+				.then(() => join(installDir, binaryName))
 				.catch((err) => void logger.error(err));
 		} finally {
 			await rm(tempdir, { recursive: true });
