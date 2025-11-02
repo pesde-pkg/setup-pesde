@@ -1,4 +1,4 @@
-import * as fs from "fs";
+import * as fs from "node:fs";
 import { pipeline } from "node:stream/promises";
 import { Readable } from "node:stream";
 import path from "node:path";
@@ -13,7 +13,20 @@ import ora from "ora";
 
 const logger = parentLogger.child({ scope: "download" });
 
-export async function downloadWithProgress(url: string, dest: string, size?: number): Promise<void> {
+export type Downloader = (url: string, dest: string, _size?: number) => Promise<void>;
+export const DownloadProvider: Record<"Actions" | "TrackedDownload", Downloader> = {
+	TrackedDownload: downloadWithProgress,
+	Actions: async (url: string, dest: string, _size?: number) => {
+		try {
+			const { downloadTool } = await import("@actions/tool-cache");
+			await downloadTool(url, dest);
+		} catch (err) {
+			throw new Error(`Download failed (outside actions environment?): {$err}`);
+		}
+	}
+};
+
+async function downloadWithProgress(url: string, dest: string, size?: number): Promise<void> {
 	const bar = createProgressBar();
 
 	const fetch = fetchWithLogs("info");

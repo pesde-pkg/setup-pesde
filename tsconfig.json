@@ -6,7 +6,6 @@
 		"moduleResolution": "NodeNext",
 
 		"outDir": "./dist",
-		"rootDir": "./src",
 		"sourceMap": true,
 		"declaration": true,
 		"declarationMap": true,
@@ -36,10 +35,10 @@
 
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"],
-			"@/types/*": ["./src/types/*"]
+			"@/*": ["lib/*"],
+			"@/types/*": ["lib/types/*"]
 		}
 	},
-	"include": ["src/**/*"],
+	"include": ["lib/**/*", "src/**/*"],
 	"exclude": ["node_modules", "dist", "**/*.spec.ts", "**/*.test.ts"]
 }

@@ -3,7 +3,7 @@ import { mkdtemp, rm } from "node:fs/promises";
 import { basename, join } from "node:path";
 
 import pkg from "../package.json" with { type: "json" };
-import { downloadWithProgress } from "./download.js";
+import type { Downloader } from "./download.js";
 import { client as gh } from "./github.js";
 import { PlatformDescriptor, ReleaseAssetDescriptor } from "./heuristics/descriptor.js";
 import log from "./logging.js";
@@ -27,6 +27,7 @@ export class ToolManager {
 	}
 
 	public async install(
+		download: Downloader,
 		installDir = import.meta.dirname,
 		binaryName = this.githubRepo.repo
 	): Promise<string | undefined> {
@@ -49,7 +50,7 @@ export class ToolManager {
 			const compressedArchive = join(tempdir, assetDescriptor.asset.name);
 
 			// download and decompress the file
-			await downloadWithProgress(assetDescriptor.asset.browser_download_url, compressedArchive, assetSize);
+			await download(assetDescriptor.asset.browser_download_url, compressedArchive, assetSize);
 			return await decompressCommonFormats(compressedArchive, installDir, {
 				filter: (file) => basename(file.path) == binaryName,
 				strip: 5 // fixme: figure this value out

@@ -1,28 +1,37 @@
-import { isDebug } from "./logging.js";
-import { ToolManager } from "./tool.js";
-import { humanReadableSize } from "./util.js";
-import logger from "./logging.js";
+import { dirname } from "node:path";
 
-// monitor peak heap usage for debugging
-if (isDebug()) {
-	var peakHeap = 0;
-	var monitorInterval = setInterval(() => {
-		const { heapUsed } = process.memoryUsage();
-		if (heapUsed > peakHeap) peakHeap = heapUsed;
-	}, 500); // check every 500ms
+import { DownloadProvider } from "@/index.js";
+import logging from "@/logging.js";
+import { ToolManager } from "@/tool.js";
+
+import { cacheDir, find } from "@actions/tool-cache";
+import * as core from "@actions/core";
+
+export type Tool = "pesde" | "lune";
+export type Repo = { owner: string; repo: string };
+const tools: Record<Tool, Repo> = {
+	pesde: { owner: "pesde-pkg", repo: "pesde" },
+	lune: { owner: "lune-org", repo: "lune" }
+};
+
+const parentLogger = logging.child({ scope: "actions" });
+parentLogger.exitOnError = true;
+
+async function setupTool(repo: Repo, version: string) {
+	const logger = parentLogger.child({ scope: "actions.setupTool" });
+
+	let toolPath = find(repo.repo, version);
+	if (toolPath == "") {
+		toolPath = await new ToolManager(repo.owner, repo.repo)
+			.version(version)
+			.install(DownloadProvider.Actions)
+			.then((optionalPath) => (optionalPath ? Promise.resolve(optionalPath) : Promise.reject("Download failed.")))
+			.catch((err) => void logger.error(err) as never)
+			.then((binaryPath) => cacheDir(dirname(binaryPath), repo.repo, version)); // todo: figure out version, this clobbers cache if version is "latest"
+	}
+
+	core.addPath(toolPath);
 }
 
-await new ToolManager("lune-org", "lune")
-	.version((v) => v.match(/^v?0\.10(?:\.\d+)?$/g) != null)
-	.install()
-	.finally(() => {
-		if (isDebug()) {
-			clearInterval(monitorInterval);
-			logger.debug("Peak heap usage: %s", humanReadableSize(peakHeap));
-		}
-	});
-
-// todo: - make this a `lib/` and have an `src/` for just the actions part
-//       - we can also make an `Io` interface which we implement for two classes,
-//         one for github actions using `@actions/io` and another using node apis
-// todo: structured errors
+await setupTool(tools.lune, core.getInput("lune-version"));
+await setupTool(tools.pesde, core.getInput("version"));

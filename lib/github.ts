@@ -11,7 +11,7 @@ export function redactToken(token?: string): string {
 	return token.replace(new RegExp(token, "g"), `${prefix}***`);
 }
 
-export const token = getInput("token") || process.env.GITHUB_TOKEN;
+export const token = getInput("token") || process.env.GITHUB_TOKEN; // todo: decouple this from lib
 logger.info(`Initalized GitHub client with token: ${redactToken(token)}`);
 
 type FetchFunction = (input: string | URL | Request, init?: RequestInit) => Promise<Response>;

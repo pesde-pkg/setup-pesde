@@ -6,6 +6,7 @@ import { SpinnerTransport } from "./spinner.js";
 import { isDebug as actionsDebug } from "@actions/core";
 import winston from "winston";
 
+// todo: decouple
 export const isDebug = () => process.env.DEV_DEBUG || process.env.NODE_LOG === "debug" || actionsDebug();
 const baseFormat = winston.format.combine(
 	winston.format.simple(),
@@ -46,5 +47,7 @@ export default winston.createLogger({
 				level: "debug"
 			});
 		})()
+
+		// todo: transport for actions core
 	]
 });
