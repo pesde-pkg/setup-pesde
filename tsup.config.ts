@@ -9,5 +9,8 @@ export default defineConfig({
 	// make the ouput standalone (all dependencies bundled)
 	bundle: true,
 	noExternal: [/.*/],
-	shims: true
+	shims: true,
+	banner: {
+		js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);"
+	}
 });
