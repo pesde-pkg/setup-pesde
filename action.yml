@@ -10,7 +10,7 @@ inputs:
   lune-version:
     description: "Version of lune to install"
   token:
-    description: "A GitHub token, used to access the API and avoid ratelimits. Defaults to `${{ github.token }}`"
+    description: "A GitHub token, used to access the API and avoid ratelimits. Defaults to `github.token`"
     default: ${{ github.server_url == 'https://github.com' && github.token || '' }}
 runs:
   using: "node16" # todo: consider bumping to a newer version?
