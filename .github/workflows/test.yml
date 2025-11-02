@@ -1,0 +1,37 @@
+name: "Run tests"
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  install:
+    name: Install only pesde
+    runs-on: ubuntu-latest # todo: use a matrix and test for all OS'
+
+    steps:
+      - name: Install pesde
+        uses: ./
+
+      - name: Test pesde installation
+        run: |
+          pesde --verson
+          pesde x pesde/hello
+
+  install-with-lune:
+    name: Install pesde with Lune
+    runs-on: ubuntu-latest # todo: use a matrix and test for all OS'
+
+    steps:
+      - name: Install pesde & Lune
+        uses: ./
+
+      - name: Test pesde installation
+        run: |
+          pesde --verson
+          pesde x pesde/hello
+
+      - name: Test Lune installation
+        run: |
+          lune --version
+          echo 'print("Hello, Lune!")' | lune run -

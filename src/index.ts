@@ -27,7 +27,10 @@ async function setupTool(repo: Repo, version: string) {
 			.install(DownloadProvider.Actions)
 			.then((optionalPath) => (optionalPath ? Promise.resolve(optionalPath) : Promise.reject("Download failed.")))
 			.catch((err) => void logger.error(err) as never)
-			.then((binaryPath) => cacheDir(dirname(binaryPath), repo.repo, version)); // todo: figure out version, this clobbers cache if version is "latest"
+			.then((binaryPath) => cacheDir(dirname(binaryPath), repo.repo, version));
+
+		// todo: figure out version, this clobbers cache if version is "latest"
+		// todo: make caching optional
 	}
 
 	core.addPath(toolPath);
