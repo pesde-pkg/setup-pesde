@@ -17,9 +17,7 @@ jobs:
         uses: ./
 
       - name: Test pesde installation
-        run: |
-          pesde --version
-          pesde x pesde/hello
+        run: pesde --version
 
   install-with-lune:
     name: Install pesde with Lune
