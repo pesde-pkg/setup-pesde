@@ -26,5 +26,5 @@ export async function cacheKey(): Promise<string> {
 		return hash.digest("hex");
 	};
 
-	return `pesde-${process.platform}-${process.arch}-${hashFiles("pesde.toml", "pesde.lock")}`;
+	return `pesde-${process.platform}-${process.arch}-${await hashFiles("pesde.toml", "pesde.lock")}`;
 }
