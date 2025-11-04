@@ -24,6 +24,4 @@ import { DownloadProvider } from "./download.js";
 // 		}
 // 	});
 
-// todo: structured errors
-
 export { ToolManager, DownloadProvider };

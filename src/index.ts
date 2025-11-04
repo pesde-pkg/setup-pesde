@@ -33,7 +33,7 @@ async function setupTool(repo: Repo, version: string) {
 					: (logger.error("Install failed.") as never)
 			);
 
-		// todo: make caching optional
+		// todo: optionally support packages caching
 	}
 
 	core.addPath(toolPath);
