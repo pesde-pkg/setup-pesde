@@ -47,25 +47,31 @@ if (core.getState("post") === "true") {
 
 	if (core.getState("needsCache") === "true") {
 		const cacheId = await cache.saveCache(PESDE_PACKAGE_DIRS, await cacheKey());
-		core.saveState("needsCache", false);
+		core.saveState("needsCache", false); // notify future runs caching isn't required
 
 		cacheLogger.info(`Successfully cached to ${cacheId}, exiting`);
 	} else {
 		cacheLogger.info("No caching required, exiting");
 	}
 
+	// notify future runs that they will no longer be a post-run
+	core.saveState("post", false);
 	exit(0);
 }
 
 const luneVersion = core.getInput("lune-version");
 if (luneVersion !== "") await setupTool(tools.lune, luneVersion);
 
-await setupTool(tools.pesde, core.getInput("version") || "latest").finally(() => core.saveState("post", true));
+await setupTool(tools.pesde, core.getInput("version") || "latest");
+
+// notify future runs that they will be the post-run
+core.saveState("post", true);
+
 if (core.getBooleanInput("cache")) {
 	await cache.restoreCache(PESDE_PACKAGE_DIRS, await cacheKey()).then((hit) => {
 		if (!hit) {
 			cacheLogger.warn("Cache miss, dispatching future post-run to save cache");
-			core.saveState("needsCache", true);
+			core.saveState("needsCache", true); // notify future runs that they need to cache
 			return;
 		}
 

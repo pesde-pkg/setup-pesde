@@ -114668,11 +114668,13 @@ if (coreExports.getState("post") === "true") {
   } else {
     cacheLogger.info("No caching required, exiting");
   }
+  coreExports.saveState("post", false);
   exit(0);
 }
 const luneVersion = coreExports.getInput("lune-version");
 if (luneVersion !== "") await setupTool(tools.lune, luneVersion);
-await setupTool(tools.pesde, coreExports.getInput("version") || "latest").finally(() => coreExports.saveState("post", true));
+await setupTool(tools.pesde, coreExports.getInput("version") || "latest");
+coreExports.saveState("post", true);
 if (coreExports.getBooleanInput("cache")) {
   await cacheExports.restoreCache(PESDE_PACKAGE_DIRS, await cacheKey()).then((hit) => {
     if (!hit) {
