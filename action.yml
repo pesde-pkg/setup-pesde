@@ -10,8 +10,11 @@ inputs:
   lune-version:
     description: "Version of lune to install"
   token:
-    description: "A GitHub token, used to access the API and avoid ratelimits. Defaults to `github.token`"
+    description: "A GitHub token, used to access the API and avoid ratelimits (defaults to `github.token`)"
     default: ${{ github.server_url == 'https://github.com' && github.token || '' }}
+  cache:
+    description: "Whether to cache package directories and the pesde index (defaults to false)"
+    default: false
 runs:
   using: "node20"
   main: "dist/index.js"

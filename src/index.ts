@@ -40,7 +40,7 @@ async function setupTool(repo: Repo, version: string) {
 	core.addPath(toolPath);
 }
 
-if (core.getState("needsCache") === "true") {
+if (core.getBooleanInput("cache") && core.getState("needsCache") === "true") {
 	// post-run invocation, just cache and exit
 	await cache.saveCache(PESDE_PACKAGE_DIRS, await cacheKey());
 	core.saveState("needsCache", false);
@@ -51,8 +51,9 @@ if (core.getState("needsCache") === "true") {
 const luneVersion = core.getInput("lune-version");
 if (luneVersion !== "") await setupTool(tools.lune, luneVersion);
 
-// todo: make caching here optional
 await setupTool(tools.pesde, core.getInput("version") || "latest");
-await cache
-	.restoreCache(PESDE_PACKAGE_DIRS, await cacheKey())
-	.then((hit) => (!hit ? core.saveState("needsCache", true) : {}));
+if (core.getBooleanInput("cache")) {
+	await cache
+		.restoreCache(PESDE_PACKAGE_DIRS, await cacheKey())
+		.then((hit) => (!hit ? core.saveState("needsCache", true) : {}));
+}
