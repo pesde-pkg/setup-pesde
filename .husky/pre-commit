@@ -1,0 +1,12 @@
+if [ ! -s ".git/COMMIT_EDITMSG" ]; then
+  echo "No commit message, skipping hook"
+  exit 0
+fi
+
+# format code
+prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
+git update-index --again
+
+# build outputs
+pnpm build
+git add -A

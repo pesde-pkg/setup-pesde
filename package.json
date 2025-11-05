@@ -8,7 +8,8 @@
 		"prettier": "node --experimental-strip-types node_modules/prettier/bin/prettier.cjs",
 		"build": "rollup -c rollup.config.ts",
 		"dev": "pnpm build && NODE_LOG=debug GITHUB_TOKEN=$(gh auth token) node dist/",
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepare": "node .husky/husky.ts"
 	},
 	"keywords": [],
 	"author": "",
@@ -47,6 +48,7 @@
 		"@types/node": "^24.9.1",
 		"eslint": "^9.38.0",
 		"eslint-plugin-prettier": "^5.5.4",
+		"husky": "^9.1.7",
 		"prettier": "^3.6.2",
 		"rollup": "^4.52.5",
 		"rollup-plugin-esbuild": "^6.2.1",
