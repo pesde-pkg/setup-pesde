@@ -1,10 +1,11 @@
+import { stripVTControlCharacters } from "node:util";
+
 import Transport from "winston-transport";
 import * as core from "@actions/core";
-import stripAnsi from "strip-ansi";
 
 // remove the scope part, separated from the message by a colon
 function stripScopeFromMessage(str: string): string {
-	const ansiRemoved = stripAnsi(str);
+	const ansiRemoved = stripVTControlCharacters(str);
 	const parts = ansiRemoved.split(":");
 	return parts.slice(1).join(":").trimStart();
 }

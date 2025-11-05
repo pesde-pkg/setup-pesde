@@ -49,9 +49,6 @@ importers:
       ora:
         specifier: ^9.0.0
         version: 9.0.0
-      strip-ansi:
-        specifier: ^7.1.2
-        version: 7.1.2
       tslib:
         specifier: ^2.8.1
         version: 2.8.1

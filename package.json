@@ -33,7 +33,6 @@
 		"decompress-unzip": "npm:@xhmikosr/decompress-unzip@^7.1.0",
 		"is-interactive": "^2.0.0",
 		"ora": "^9.0.0",
-		"strip-ansi": "^7.1.2",
 		"tslib": "^2.8.1",
 		"winston": "^3.18.3",
 		"winston-transport": "^4.9.0"

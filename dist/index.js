@@ -21,7 +21,7 @@ import require$$0$b from 'assert';
 import require$$8 from 'querystring';
 import require$$14 from 'stream/web';
 import require$$0$e, { Readable } from 'node:stream';
-import require$$1$6, { promisify } from 'node:util';
+import require$$1$6, { stripVTControlCharacters, promisify } from 'node:util';
 import require$$0$d from 'node:events';
 import require$$0$f from 'worker_threads';
 import require$$2$3 from 'perf_hooks';
@@ -42016,36 +42016,8 @@ function requireCore () {
 
 var coreExports = requireCore();
 
-function ansiRegex({onlyFirst = false} = {}) {
-	// Valid string terminator sequences are BEL, ESC\, and 0x9c
-	const ST = '(?:\\u0007|\\u001B\\u005C|\\u009C)';
-
-	// OSC sequences only: ESC ] ... ST (non-greedy until the first ST)
-	const osc = `(?:\\u001B\\][\\s\\S]*?${ST})`;
-
-	// CSI and related: ESC/C1, optional intermediates, optional params (supports ; and :) then final byte
-	const csi = '[\\u001B\\u009B][[\\]()#;?]*(?:\\d{1,4}(?:[;:]\\d{0,4})*)?[\\dA-PR-TZcf-nq-uy=><~]';
-
-	const pattern = `${osc}|${csi}`;
-
-	return new RegExp(pattern, onlyFirst ? undefined : 'g');
-}
-
-const regex = ansiRegex();
-
-function stripAnsi(string) {
-	if (typeof string !== 'string') {
-		throw new TypeError(`Expected a \`string\`, got \`${typeof string}\``);
-	}
-
-	// Even though the regex is global, we don't need to reset the `.lastIndex`
-	// because unlike `.exec()` and `.test()`, `.replace()` does it automatically
-	// and doing it manually has a performance penalty.
-	return string.replace(regex, '');
-}
-
 function stripScopeFromMessage(str) {
-  const ansiRemoved = stripAnsi(str);
+  const ansiRemoved = stripVTControlCharacters(str);
   const parts = ansiRemoved.split(":");
   return parts.slice(1).join(":").trimStart();
 }
