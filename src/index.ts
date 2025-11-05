@@ -40,7 +40,7 @@ async function setupTool(repo: Repo, version: string) {
 	core.addPath(toolPath);
 }
 
-if (core.getBooleanInput("cache") && core.getState("needsCache") === "true") {
+if (core.getState("needsCache") === "true") {
 	// post-run invocation, just cache and exit
 	await cache.saveCache(PESDE_PACKAGE_DIRS, await cacheKey());
 	core.saveState("needsCache", false);

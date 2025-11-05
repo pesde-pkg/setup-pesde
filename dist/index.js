@@ -114659,7 +114659,7 @@ async function setupTool(repo, version) {
   }
   coreExports.addPath(toolPath);
 }
-if (coreExports.getBooleanInput("cache") && coreExports.getState("needsCache") === "true") {
+if (coreExports.getState("needsCache") === "true") {
   await cacheExports.saveCache(PESDE_PACKAGE_DIRS, await cacheKey());
   coreExports.saveState("needsCache", false);
   exit(0);
