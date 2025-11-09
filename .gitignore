@@ -2,6 +2,7 @@
 dist/
 !dist/**/*.js
 node_modules/
+.eslintcache
 
 # pesde packages
 **/*_packages/

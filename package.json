@@ -8,7 +8,7 @@
 		"prettier": "node --experimental-strip-types node_modules/prettier/bin/prettier.cjs",
 		"build": "rollup -c rollup.config.ts",
 		"dev": "pnpm build && NODE_LOG=debug GITHUB_TOKEN=$(gh auth token) node dist/",
-		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint **/*.ts --cache",
 		"prepare": "node .husky/husky.ts"
 	},
 	"keywords": [],
@@ -39,19 +39,27 @@
 	},
 	"devDependencies": {
 		"@actions/cache": "^4.1.0",
+		"@eslint/js": "^9.39.1",
 		"@octokit/types": "^15.0.1",
 		"@rollup/plugin-commonjs": "^29.0.0",
 		"@rollup/plugin-json": "^6.1.0",
 		"@rollup/plugin-node-resolve": "^16.0.3",
 		"@types/decompress": "^4.2.7",
 		"@types/node": "^24.9.1",
+		"@typescript-eslint/eslint-plugin": "^8.46.3",
+		"@typescript-eslint/parser": "^8.46.3",
 		"eslint": "^9.38.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-import": "^2.32.0",
 		"eslint-plugin-prettier": "^5.5.4",
+		"globals": "^16.5.0",
 		"husky": "^9.1.7",
+		"jiti": "^2.6.1",
 		"prettier": "^3.6.2",
 		"rollup": "^4.52.5",
 		"rollup-plugin-esbuild": "^6.2.1",
 		"rollup-plugin-tsconfig-paths": "^1.5.2",
-		"typescript": "^5.9.3"
+		"typescript": "^5.9.3",
+		"typescript-eslint": "^8.46.3"
 	}
 }
