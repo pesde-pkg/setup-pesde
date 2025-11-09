@@ -4,10 +4,8 @@ on:
   pull_request:
   workflow_dispatch:
 
-# todo: test for various version inputs
-
 jobs:
-  install:
+  test:
     name: Install only pesde
     runs-on: ${{ matrix.os }}
 
@@ -15,6 +13,7 @@ jobs:
       matrix: &matrix
         os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15, macos-15-intel, windows-2025]
         cache: [true, false]
+        version: [latest, v0.7.1]
 
     steps:
       - name: Checkout repository
