@@ -42025,6 +42025,7 @@ class ActionsTransport extends Transport {
   constructor(opts) {
     super(opts);
   }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   log(info, callback) {
     setImmediate(() => this.emit("logged", info));
     const level = info[Symbol.for("level")];

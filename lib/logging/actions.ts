@@ -15,6 +15,7 @@ export class ActionsTransport extends Transport {
 		super(opts);
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	override log(info: any, callback: () => void): void {
 		setImmediate(() => this.emit("logged", info));
 
