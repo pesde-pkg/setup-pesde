@@ -59103,8 +59103,7 @@ const PESDE_PACKAGE_DIRS = [
   join(process.env.GITHUB_WORKSPACE, "luau_packages"),
   join(process.env.GITHUB_WORKSPACE, "lune_packages"),
   join(process.env.GITHUB_WORKSPACE, "roblox_packages"),
-  join(process.env.GITHUB_WORKSPACE, "roblox_server_packages"),
-  join(homedir(), ".pesde")
+  join(process.env.GITHUB_WORKSPACE, "roblox_server_packages")
 ];
 async function cacheKey() {
   const hashFiles = async (...paths) => {
