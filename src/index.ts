@@ -31,7 +31,7 @@ async function setupTool(repo: Repo, version: string) {
 		toolPath = await new ToolManager(repo.owner, repo.repo)
 			.version(version)
 			.install(DownloadProvider.Actions)
-			.then((optionalPath) => (optionalPath ? Promise.resolve(optionalPath) : Promise.reject("Download failed.")))
+			.then((result) => (result.path ? Promise.resolve(result) : Promise.reject("Download failed.")))
 			.catch((err) => void logger.error(err) as never)
 			.then((result) =>
 				result.path

@@ -114636,7 +114636,7 @@ async function setupTool(repo, version) {
   const logger = parentLogger.child({ scope: "actions.setupTool" });
   let toolPath = toolCacheExports.find(repo.repo, version);
   if (!toolPath) {
-    toolPath = await new ToolManager(repo.owner, repo.repo).version(version).install(DownloadProvider.Actions).then((optionalPath) => optionalPath ? Promise.resolve(optionalPath) : Promise.reject("Download failed.")).catch((err) => void logger.error(err)).then(
+    toolPath = await new ToolManager(repo.owner, repo.repo).version(version).install(DownloadProvider.Actions).then((result) => result.path ? Promise.resolve(result) : Promise.reject("Download failed.")).catch((err) => void logger.error(err)).then(
       (result) => result.path ? toolCacheExports.cacheDir(dirname(result.path), repo.repo, result.version) : logger.error("Install failed.")
     );
   }
