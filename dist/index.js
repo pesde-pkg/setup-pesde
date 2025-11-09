@@ -46081,19 +46081,19 @@ const client = githubExports.getOctokit(token, {
 });
 
 const OS_SUBSTRINGS = {
-  windows: ["windows"],
-  macos: ["macos", "darwin", "apple"],
-  linux: ["linux", "ubuntu", "debian", "fedora"]
+  Windows: ["windows"],
+  macOS: ["macos", "darwin", "apple"],
+  Linux: ["linux", "ubuntu", "debian", "fedora"]
 };
 const OS_FULL_WORDS = {
-  windows: ["win", "win32", "win64"],
-  macos: ["mac", "osx"],
-  linux: []
+  Windows: ["win", "win32", "win64"],
+  macOS: ["mac", "osx"],
+  Linux: []
 };
 function currentSystem$1() {
-  if (process.platform === "win32" || process.platform === "cygwin") return "windows";
-  if (process.platform === "darwin") return "macos";
-  if (process.platform === "linux") return "linux";
+  if (process.platform === "win32" || process.platform === "cygwin") return "Windows";
+  if (process.platform === "darwin") return "macOS";
+  if (process.platform === "linux") return "Linux";
   throw new Error(`Unsupported OS: ${process.platform}`);
 }
 function detectOS(searchString) {
@@ -46151,7 +46151,7 @@ function detectArch(searchString) {
       }
     }
   }
-  if (lower.includes("universal") && detectOS(searchString) === "macos") {
+  if (lower.includes("universal") && detectOS(searchString) === "macOS") {
     return "x64";
   }
   return void 0;
@@ -59116,7 +59116,7 @@ async function cacheKey() {
     }
     return hash.digest("hex");
   };
-  return `pesde-${currentSystem$1()}-${currentSystem()}-${await hashFiles("pesde.toml", "pesde.lock")}`;
+  return `pesde-${currentSystem$1()}-${currentSystem().toUpperCase()}-${await hashFiles("pesde.toml", "pesde.lock")}`;
 }
 
 var toolCache$1 = {};

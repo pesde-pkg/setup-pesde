@@ -1,27 +1,27 @@
 // Mostly a recreation of rokit's detection logic in TypeScript           //
 // See https://github.com/rojo-rbx/rokit/blob/a6b84c/lib/descriptor/os.rs //
 
-export type OS = "windows" | "macos" | "linux";
+export type OS = "Windows" | "macOS" | "Linux";
 
 const OS_SUBSTRINGS: Record<OS, string[]> = {
-	windows: ["windows"],
-	macos: ["macos", "darwin", "apple"],
-	linux: ["linux", "ubuntu", "debian", "fedora"]
+	Windows: ["windows"],
+	macOS: ["macos", "darwin", "apple"],
+	Linux: ["linux", "ubuntu", "debian", "fedora"]
 };
 
 const OS_FULL_WORDS: Record<OS, string[]> = {
-	windows: ["win", "win32", "win64"],
-	macos: ["mac", "osx"],
-	linux: []
+	Windows: ["win", "win32", "win64"],
+	macOS: ["mac", "osx"],
+	Linux: []
 };
 
 /**
  * Returns the OS of the current host system.
  */
 export function currentSystem(): OS {
-	if (process.platform === "win32" || process.platform === "cygwin") return "windows";
-	if (process.platform === "darwin") return "macos";
-	if (process.platform === "linux") return "linux";
+	if (process.platform === "win32" || process.platform === "cygwin") return "Windows";
+	if (process.platform === "darwin") return "macOS";
+	if (process.platform === "linux") return "Linux";
 
 	throw new Error(`Unsupported OS: ${process.platform}`);
 }
@@ -33,9 +33,9 @@ export function currentSystem(): OS {
  * ## Example usage:
  *
  * ```js
- * console.log(detectOS("build-linux-aarch64.tar.gz")); // → "linux"
- * console.log(detectOS("Darwin.tar.gz"));              // → "macos"
- * console.log(detectOS("ubuntu-x64"));                 // → "linux"
+ * console.log(detectOS("build-linux-aarch64.tar.gz")); // → "Linux"
+ * console.log(detectOS("Darwin.tar.gz"));              // → "macOS"
+ * console.log(detectOS("ubuntu-x64"));                 // → "Linux"
  * ```
  */
 export function detectOS(searchString: string): OS | undefined {

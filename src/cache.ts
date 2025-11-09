@@ -28,5 +28,5 @@ export async function cacheKey(): Promise<string> {
 		return hash.digest("hex");
 	};
 
-	return `pesde-${currentOS()}-${currentArch()}-${await hashFiles("pesde.toml", "pesde.lock")}`;
+	return `pesde-${currentOS()}-${currentArch().toUpperCase()}-${await hashFiles("pesde.toml", "pesde.lock")}`;
 }

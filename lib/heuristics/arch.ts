@@ -67,7 +67,7 @@ export function detectArch(searchString: string): Arch | undefined {
 	}
 
 	// hack: macOS universal binaries fallback
-	if (lower.includes("universal") && detectOS(searchString) === "macos") {
+	if (lower.includes("universal") && detectOS(searchString) === "macOS") {
 		return "x64";
 	}
 
