@@ -20,13 +20,20 @@ A usage example as well as the default values for the accepted inputs is provide
     # Version of pesde to install; must not include registry version build metadata.
     version: "latest"
 
-    # The version of lune to install. If unspecified, lune is not installed.
+    # The version of lune to install. If unspecified, lune is not installed. It is
+    # recommended to leave undefined if using pesde managed engines.
     lune-version: ""
 
     # Whether the pesde's home (defaulting to `~/.pesde` unless $PESDE_HOME is specified)
     # and all the dependencies should be stored in cache and restored when required. The
     # cache key is derived from the pesde.toml manifest and the lockfile.
     cache: false
+
+    # The directory used by pesde to store all its data (the CAS, installed binaries, etc).
+    # Its value takes precedence over setting the `$PESDE_HOME` environment variable. If
+    # undefined, defaults to either `$PESDE_HOME` or `~/.pesde`, where the tilde corresponds
+    # to the home directory.
+    home: "~/.pesde"
 ```
 
 ## Caching
