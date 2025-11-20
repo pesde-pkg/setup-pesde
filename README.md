@@ -34,6 +34,10 @@ A usage example as well as the default values for the accepted inputs is provide
     # undefined, defaults to either `$PESDE_HOME` or `~/.pesde`, where the tilde corresponds
     # to the home directory.
     home: "~/.pesde"
+
+    # The base directory containing the pesde project. This is utilized to figure out the
+    # the directories to cache. Defaults to the path of the checked out source code.
+    cwd: ${{ github.workspace }}
 ```
 
 ## Caching

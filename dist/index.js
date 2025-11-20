@@ -59099,11 +59099,12 @@ const DownloadProvider = {
   }
 };
 
+const cwd = coreExports.getInput("cwd");
 const PESDE_PACKAGE_DIRS = [
-  join(process.env.GITHUB_WORKSPACE, "luau_packages"),
-  join(process.env.GITHUB_WORKSPACE, "lune_packages"),
-  join(process.env.GITHUB_WORKSPACE, "roblox_packages"),
-  join(process.env.GITHUB_WORKSPACE, "roblox_server_packages")
+  join(cwd, "luau_packages"),
+  join(cwd, "lune_packages"),
+  join(cwd, "roblox_packages"),
+  join(cwd, "roblox_server_packages")
 ];
 async function cacheKey() {
   const hashFiles = async (...paths) => {

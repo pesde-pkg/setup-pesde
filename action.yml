@@ -17,6 +17,9 @@ inputs:
     default: false
   home:
     description: "Directory where pesde should store its CAS, binaries, and other data (defaults to $PESDE_HOME)"
+  cwd:
+    description: "Base directory where the pesde project is located (defaults to $GITHUB_WORKSPACE)"
+    default: ${{ github.workspace }}
 runs:
   using: "node20"
   main: "dist/index.js"

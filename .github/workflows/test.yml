@@ -23,7 +23,7 @@ jobs:
         uses: ./
         with:
           cache: ${{ matrix.cache }}
-        working-directory: test
+          cwd: test
 
       - name: Test pesde installation
         run: |
@@ -47,7 +47,7 @@ jobs:
         with:
           lune-version: latest
           cache: ${{ matrix.cache }}
-        working-directory: test
+          cwd: test
 
       - name: Test pesde installation
         run: |

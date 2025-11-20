@@ -15,8 +15,9 @@ if (isDebug()) {
 	}, 500); // check every 500ms
 }
 
-await new ToolManager("lune-org", "lune")
-	.version((v) => v.match(/^v?0\.10(?:\.\d+)?$/g) != null)
+const version = "0.7.1";
+await new ToolManager("pesde-pkg", "pesde")
+	.version((potential) => potential.match(/^v?(\d+\.\d+\.\d+)/)?.some((v) => v === version) || false)
 	.install(DownloadProvider.TrackedDownload)
 	.finally(() => {
 		if (isDebug()) {

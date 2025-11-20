@@ -5,11 +5,14 @@ import { join } from "node:path";
 import { currentSystem as currentOS } from "@/heuristics/os.js";
 import { currentSystem as currentArch } from "@/heuristics/arch.js";
 
+import { getInput } from "@actions/core";
+
+const cwd = getInput("cwd");
 export const PESDE_PACKAGE_DIRS = [
-	join(process.env.GITHUB_WORKSPACE!, "luau_packages"),
-	join(process.env.GITHUB_WORKSPACE!, "lune_packages"),
-	join(process.env.GITHUB_WORKSPACE!, "roblox_packages"),
-	join(process.env.GITHUB_WORKSPACE!, "roblox_server_packages")
+	join(cwd, "luau_packages"),
+	join(cwd, "lune_packages"),
+	join(cwd, "roblox_packages"),
+	join(cwd, "roblox_server_packages")
 ];
 
 export async function cacheKey(): Promise<string> {
