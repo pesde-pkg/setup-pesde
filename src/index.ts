@@ -1,6 +1,6 @@
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
-import { exit } from "node:process";
+import { chdir, exit } from "node:process";
 import { isDeepStrictEqual } from "node:util";
 
 import { DownloadProvider } from "@/index.js";
@@ -29,6 +29,9 @@ await ensureExists(PESDE_HOME);
 core.exportVariable("PESDE_HOME", PESDE_HOME);
 
 parentLogger.info(`Discovered pesde home directory: ${PESDE_HOME}`);
+
+// change directory into the root specified
+chdir(core.getInput("cwd"));
 
 async function setupTool(repo: Repo, version: string) {
 	const logger = parentLogger.child({ scope: "actions.setupTool" });

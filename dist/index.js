@@ -1,6 +1,6 @@
 import path, { join, basename as basename$1, dirname } from 'node:path';
 import require$$1$8, { tmpdir, homedir } from 'node:os';
-import process$1, { exit } from 'node:process';
+import process$1, { chdir, exit } from 'node:process';
 import require$$1$6, { stripVTControlCharacters, promisify, isDeepStrictEqual } from 'node:util';
 import { mkdir as mkdir$1, mkdtemp, rm, readFile as readFile$1 } from 'node:fs/promises';
 import fs$1, { existsSync, appendFileSync } from 'node:fs';
@@ -114644,6 +114644,7 @@ const PESDE_HOME = coreExports.getInput("home") || process.env.PESDE_HOME || joi
 await ensureExists(PESDE_HOME);
 coreExports.exportVariable("PESDE_HOME", PESDE_HOME);
 parentLogger.info(`Discovered pesde home directory: ${PESDE_HOME}`);
+chdir(coreExports.getInput("cwd"));
 async function setupTool(repo, version) {
   const logger = parentLogger.child({ scope: "actions.setupTool" });
   let toolPath = toolCacheExports.find(repo.repo, version);
