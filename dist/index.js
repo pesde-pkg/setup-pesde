@@ -114630,7 +114630,7 @@ const tools = {
 };
 const parentLogger = logging.child({ scope: "actions" });
 parentLogger.exitOnError = true;
-const PESDE_HOME = join(homedir(), ".pesde");
+const PESDE_HOME = coreExports.getInput("home") || process.env.PESDE_HOME || join(homedir(), ".pesde");
 async function setupTool(repo, version) {
   const logger = parentLogger.child({ scope: "actions.setupTool" });
   let toolPath = toolCacheExports.find(repo.repo, version);

@@ -15,6 +15,8 @@ inputs:
   cache:
     description: "Whether to cache package directories and the pesde index (defaults to false)"
     default: false
+  home:
+    description: "Directory where pesde should store its CAS, binaries, and other data (defaults to $PESDE_HOME)"
 runs:
   using: "node20"
   main: "dist/index.js"
