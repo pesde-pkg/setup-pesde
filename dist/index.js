@@ -114657,9 +114657,14 @@ const cacheLogger = parentLogger.child({ scope: "actions.cache" });
 if (coreExports.getState("post") === "true") {
   if (coreExports.getState("needsCache") === "true") {
     const toCache = [...PESDE_PACKAGE_DIRS, PESDE_HOME];
-    const canCache = await Promise.any(toCache.map((p) => access(p))).then(() => true).catch(() => false);
-    if (canCache) {
-      const cacheId = await cacheExports.saveCache(toCache, await cacheKey());
+    const cacheableDirs = await Promise.all(
+      // filter out dirs which do not exist and cannot be cached
+      toCache.filter(async (p) => {
+        return await access(p).then(() => true).catch(() => false);
+      })
+    );
+    if (cacheableDirs.length != 0) {
+      const cacheId = await cacheExports.saveCache(cacheableDirs, await cacheKey());
       coreExports.saveState("needsCache", false);
       cacheLogger.info(`Successfully cached to ${cacheId}, exiting`);
     }
