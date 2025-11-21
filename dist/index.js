@@ -1,7 +1,7 @@
 import path, { join, basename as basename$1, dirname } from 'node:path';
 import process$1, { env, chdir, exit } from 'node:process';
 import require$$1$6, { stripVTControlCharacters, promisify, isDeepStrictEqual } from 'node:util';
-import { mkdir as mkdir$1, mkdtemp, rm, readFile as readFile$1, access } from 'node:fs/promises';
+import { mkdir as mkdir$1, mkdtemp, rm, readFile as readFile$1, rename, access } from 'node:fs/promises';
 import require$$1$8, { tmpdir, homedir } from 'node:os';
 import fs$1, { existsSync, appendFileSync } from 'node:fs';
 import require$$0$4 from 'util';
@@ -114667,7 +114667,7 @@ const pesdeHome = process.platform === "win32" ? join(dirname(env.GITHUB_WORKSPA
 const cacheDirs = [...PESDE_PACKAGE_DIRS, pesdeHome];
 if (coreExports.getState("post") === "true") {
   if (coreExports.getState("needsCache") === "true") {
-    await ioExports.mv(PESDE_HOME, pesdeHome);
+    await rename(PESDE_HOME, pesdeHome);
     const cacheableDirs = await Promise.all(
       // filter out dirs which do not exist and cannot be cached
       cacheDirs.map(async (p) => {
@@ -114697,7 +114697,7 @@ if (coreExports.getBooleanInput("cache")) {
       coreExports.saveState("needsCache", true);
       return;
     }
-    await ioExports.mv(pesdeHome, PESDE_HOME);
+    await rename(pesdeHome, PESDE_HOME);
     cacheLogger.info(`Restored cache key ${hit} successfully`);
   });
 }
