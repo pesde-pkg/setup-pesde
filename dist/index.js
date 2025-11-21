@@ -1,5 +1,5 @@
 import path, { resolve, join, basename as basename$1, dirname } from 'node:path';
-import process$1, { env, chdir, exit } from 'node:process';
+import process$1, { env, exit } from 'node:process';
 import require$$1$6, { stripVTControlCharacters, promisify, isDeepStrictEqual } from 'node:util';
 import { stat, readdir, copyFile, readlink as readlink$1, symlink as symlink$1, rm, mkdir as mkdir$1, mkdtemp, readFile as readFile$1, access } from 'node:fs/promises';
 import require$$1$8, { tmpdir, homedir } from 'node:os';
@@ -114667,7 +114667,6 @@ function expandRelativeToWorkspace(path) {
   path = path.replace(/\$HOME/g, homeDir).replace(/\$\{HOME\}/g, homeDir);
   return path;
 }
-chdir(coreExports.getInput("cwd"));
 async function setupTool(repo, version) {
   const logger = parentLogger.child({ scope: "actions.setupTool" });
   let toolPath = toolCacheExports.find(repo.repo, version);

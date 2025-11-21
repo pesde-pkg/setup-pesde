@@ -1,5 +1,5 @@
 import { dirname, join } from "node:path";
-import { chdir, env, exit } from "node:process";
+import { env, exit } from "node:process";
 import { isDeepStrictEqual } from "node:util";
 import { access } from "node:fs/promises";
 import { homedir } from "node:os";
@@ -45,7 +45,7 @@ function expandRelativeToWorkspace(path: string) {
 }
 
 // change directory into the root specified
-chdir(core.getInput("cwd"));
+// chdir(core.getInput("cwd"));
 
 async function setupTool(repo: Repo, version: string) {
 	const logger = parentLogger.child({ scope: "actions.setupTool" });
