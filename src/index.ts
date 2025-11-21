@@ -83,7 +83,7 @@ const cacheLogger = parentLogger.child({ scope: "actions.cache" });
 // be represented relatively to the github workspace. so, we create a tempdir which can
 // be cached, and transform it during restore. on all other platforms, we just use the
 // regular pesde home
-const pesdeHome = process.platform === "win32" ? join(dirname(env.GITHUB_WORKSPACE!), ".pesde-tmp") : PESDE_HOME;
+const pesdeHome = process.platform === "win32" ? join(env.GITHUB_WORKSPACE!, ".pesde-tmp") : PESDE_HOME;
 const cacheDirs = [...PESDE_PACKAGE_DIRS, pesdeHome];
 
 if (core.getState("post") === "true") {

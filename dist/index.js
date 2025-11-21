@@ -114682,7 +114682,7 @@ async function setupTool(repo, version) {
   coreExports.addPath(toolPath);
 }
 const cacheLogger = parentLogger.child({ scope: "actions.cache" });
-const pesdeHome = process.platform === "win32" ? join(dirname(env.GITHUB_WORKSPACE), ".pesde-tmp") : PESDE_HOME;
+const pesdeHome = process.platform === "win32" ? join(env.GITHUB_WORKSPACE, ".pesde-tmp") : PESDE_HOME;
 const cacheDirs = [...PESDE_PACKAGE_DIRS, pesdeHome];
 if (coreExports.getState("post") === "true") {
   if (coreExports.getState("needsCache") === "true") {
