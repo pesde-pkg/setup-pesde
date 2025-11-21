@@ -1,19 +1,10 @@
 import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
-import { join } from "node:path";
 
 import { currentSystem as currentOS } from "@/heuristics/os.js";
 import { currentSystem as currentArch } from "@/heuristics/arch.js";
 
-import { getInput } from "@actions/core";
-
-const cwd = getInput("cwd");
-export const PESDE_PACKAGE_DIRS = [
-	join(cwd, "luau_packages"),
-	join(cwd, "lune_packages"),
-	join(cwd, "roblox_packages"),
-	join(cwd, "roblox_server_packages")
-];
+export const PESDE_PACKAGE_DIRS = ["luau_packages", "lune_packages", "roblox_packages", "roblox_server_packages"];
 
 export async function cacheKey(): Promise<string> {
 	const hashFiles = async (...paths: string[]) => {

@@ -59099,13 +59099,7 @@ const DownloadProvider = {
   }
 };
 
-const cwd = coreExports.getInput("cwd");
-const PESDE_PACKAGE_DIRS = [
-  join(cwd, "luau_packages"),
-  join(cwd, "lune_packages"),
-  join(cwd, "roblox_packages"),
-  join(cwd, "roblox_server_packages")
-];
+const PESDE_PACKAGE_DIRS = ["luau_packages", "lune_packages", "roblox_packages", "roblox_server_packages"];
 async function cacheKey() {
   const hashFiles = async (...paths) => {
     const hash = createHash("sha256");
